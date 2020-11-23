@@ -92,6 +92,21 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-group: !Ref LogGroup
               awslogs-stream-prefix: ecs
+  # ECS task execution policy
+  ParameterStoreAccessPolicy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: !Join ['', [!Ref ServiceName, ExecutionPolicy]]
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - "ssm:GetParameters"
+              - "secretsmanager:GetSecretValue"
+            Resource: "arn:aws:ssm:us-west-2:833860111962:*",
+      Roles:
+        - !Ref ExecutionRole
   # A role needed by ECS
   ExecutionRole:
     Type: AWS::IAM::Role
