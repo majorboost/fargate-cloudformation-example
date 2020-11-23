@@ -107,7 +107,7 @@ Resources:
               - "secretsmanager:GetSecretValue"
             Resource: "arn:aws:ssm:us-west-2:833860111962:parameter/MB/Platform/*" #TODO: Change back to /Production/*
       Roles:
-        - !Ref ExecutionRole
+        - !Ref TaskRole
   # A role needed by ECS
   ExecutionRole:
     Type: AWS::IAM::Role
