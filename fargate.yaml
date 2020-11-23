@@ -104,7 +104,7 @@ Resources:
             Action:
               - "ssm:GetParameters"
               - "secretsmanager:GetSecretValue"
-            Resource: "arn:aws:ssm:us-west-2:833860111962:*",
+            Resource: "arn:aws:ssm:us-west-2:833860111962:*"
       Roles:
         - !Ref ExecutionRole
   # A role needed by ECS
