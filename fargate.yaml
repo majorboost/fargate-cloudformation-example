@@ -10,42 +10,42 @@ Parameters:
   Certificate:
     Type: String
     # Update with the certificate ARN from Certificate Manager, which must exist in the same region.
-    Default: 'arn:aws:acm:region:123456789012:certificate/00000000-0000-0000-0000-000000000000'
+    Default: 'arn:aws:acm:us-west-2:833860111962:certificate/8e37cc33-16fb-4d4c-b30c-7fa04eb7d8aa'
   Image:
     Type: String
     # Update with the Docker image. "You can use images in the Docker Hub registry or specify other repositories (repository-url/image:tag)."
-    Default: 123456789012.dkr.ecr.region.amazonaws.com/image:tag
+    Default: 833860111962.dkr.ecr.us-west-2.amazonaws.com/majorboost/platform/mb-provider:190f26866211eec44085e0259c3e7a036e3d93a7
   ServiceName:
     Type: String
     # update with the name of the service
-    Default: MyService
+    Default: Provider
   ContainerPort:
     Type: Number
-    Default: 80
+    Default: 4501
   LoadBalancerPort:
     Type: Number
     Default: 443
   HealthCheckPath:
     Type: String
-    Default: /healthcheck
+    Default: /
   HostedZoneName:
     Type: String
-    Default: company.com
+    Default: majorboost.com
   Subdomain:
     Type: String
-    Default: myservice
+    Default: provider
   # for autoscaling
   MinContainers:
     Type: Number
-    Default: 2
+    Default: 1
   # for autoscaling
   MaxContainers:
     Type: Number
-    Default: 10
+    Default: 5
   # target CPU utilization (%)
   AutoScalingTargetValue:
     Type: Number
-    Default: 50
+    Default: 75
 Resources:
   Cluster:
     Type: AWS::ECS::Cluster
