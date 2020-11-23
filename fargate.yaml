@@ -105,7 +105,7 @@ Resources:
               - "ssm:GetParameters"
               - "ssm:GetParametersByPath"
               - "secretsmanager:GetSecretValue"
-            Resource: "arn:aws:ssm:us-west-2:833860111962:parameter/MB/Platform/Production/*"
+            Resource: "arn:aws:ssm:us-west-2:833860111962:parameter/MB/Platform/*" #TODO: Change back to /Production/*
       Roles:
         - !Ref ExecutionRole
   # A role needed by ECS
