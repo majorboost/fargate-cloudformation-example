@@ -7,6 +7,9 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
   SubnetB:
     Type: AWS::EC2::Subnet::Id
+  ClusterName:
+    Type: String
+    Description: Name of existing cluster, if blank will create a new one called '<ServiceName>Cluster'
   Certificate:
     Type: String
     # Update with the certificate ARN from Certificate Manager, which must exist in the same region.
