@@ -18,14 +18,14 @@ Parameters:
   Image:
     Type: String
     # Update with the Docker image. "You can use images in the Docker Hub registry or specify other repositories (repository-url/image:tag)."
-    Default: 833860111962.dkr.ecr.us-west-2.amazonaws.com/majorboost/platform/mb-provider:90423c6a8f4888f5b76775586d3d5b7d945e1c87
+    Default: 833860111962.dkr.ecr.us-west-2.amazonaws.com/majorboost/platform/mb-operations:90423c6a8f4888f5b76775586d3d5b7d945e1c87
   ServiceName:
     Type: String
     # update with the name of the service
-    Default: Provider
+    Default: Operations
   ContainerPort:
     Type: Number
-    Default: 4501
+    Default: 6501
   LoadBalancerPort:
     Type: Number
     Default: 443
