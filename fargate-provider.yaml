@@ -101,6 +101,9 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-group: !Ref LogGroup
               awslogs-stream-prefix: ecs
+          Environment: 
+            - Name: ASPNETCORE_ENVIRONMENT
+              Value: Production
   # ECS task execution policy
   ParameterStoreAccessPolicy:
     Type: 'AWS::IAM::Policy'
