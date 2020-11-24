@@ -7,7 +7,8 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
   SubnetB:
     Type: AWS::EC2::Subnet::Id
-  ClusterName:
+  #TODO: Cluster creation should be in a different stack and use a stack reference (!Import)
+  ExistingClusterName:
     Type: String
     Default: ''
     Description: Name of existing cluster, if blank will create a new one called '<ServiceName>Cluster'
@@ -37,7 +38,7 @@ Parameters:
     Default: majorboost.com
   Subdomain:
     Type: String
-    Default: provider
+    Default: operations
   # for autoscaling
   MinContainers:
     Type: Number
@@ -52,13 +53,14 @@ Parameters:
     Default: 75
 
 Conditions:
-  UseExistingClusterName: !Not [!Equals ['', ClusterName]]
+  CreateNewCluster: !Equals [!Ref ExistingClusterName, '']
 
 Resources:
   Cluster:
     Type: AWS::ECS::Cluster
+    Condition: CreateNewCluster
     Properties:
-      ClusterName: !If [UseExistingClusterName, !Ref ClusterName, !Join ['', [!Ref ServiceName, Cluster]]]
+      ClusterName: !Join ['', [!Ref ServiceName, Cluster]]
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     # Makes sure the log group is created before it is used.
@@ -184,7 +186,7 @@ Resources:
       - ListenerHTTPS
     Properties: 
       ServiceName: !Ref ServiceName
-      Cluster: !Ref Cluster
+      Cluster: !If [CreateNewCluster, !Ref Cluster, !Ref ExistingClusterName]
       TaskDefinition: !Ref TaskDefinition
       DeploymentConfiguration:
         MinimumHealthyPercent: 100
@@ -267,7 +269,7 @@ Resources:
     Properties:
       MinCapacity: !Ref MinContainers
       MaxCapacity: !Ref MaxContainers
-      ResourceId: !Join ['/', [service, !Ref Cluster, !GetAtt Service.Name]]
+      ResourceId: !Join ['/', [service, !If [CreateNewCluster, !Ref Cluster, !Ref ExistingClusterName], !GetAtt Service.Name]]
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       # "The Amazon Resource Name (ARN) of an AWS Identity and Access Management (IAM) role that allows Application Auto Scaling to modify your scalable target."
@@ -288,7 +290,7 @@ Resources:
 Outputs:
   Cluster:
     Description: Cluster
-    Value: !Ref Cluster
+    Value: !If [CreateNewCluster, !Ref Cluster, !Ref ExistingClusterName]
   Endpoint:
     Description: Endpoint
     Value: !Join ['', ['https://', !Ref DNSRecord]]
