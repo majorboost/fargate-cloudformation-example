@@ -117,8 +117,7 @@ Resources:
             Action:
               - "ssm:GetParameters"
               - "ssm:GetParametersByPath"
-              - "secretsmanager:GetSecretValue"
-            Resource: "arn:aws:ssm:us-west-2:833860111962:parameter/MB/Platform/Production/*"
+            Resource: "arn:aws:ssm:us-west-2:833860111962:parameter/*"
       Roles:
         - !Ref TaskRole
   # A role needed by ECS
